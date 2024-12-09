@@ -20,6 +20,11 @@ namespace SaidyakovAgents
     /// </summary>
     public partial class AgentPage : Page
     {
+        int CountRecords;
+        int CountPage;
+        int CurrentPage = 0;
+        List<Agent> CurrentPageList = new List<Agent>();
+        List<Agent> TableList;
         public AgentPage()
         {
             InitializeComponent();
@@ -28,21 +33,106 @@ namespace SaidyakovAgents
 
             AgentListView.ItemsSource = currentAgents;
 
-            ComboTypeDiscnt.SelectedIndex = 0;
+            ComboTypeAgentType.SelectedIndex = 0;
             ComboTypeSort.SelectedIndex = 0;
 
             UpdateAgents();
         }
 
+        private void ChangePage(int direction, int? selectedPage)
+        {
+            CurrentPageList.Clear();
+            CountRecords = TableList.Count;
+
+            if(CountRecords % 10 > 0)
+            {
+                CountPage = CountRecords / 10 + 1;
+            }
+            else
+            {
+                CountPage = CountRecords / 10;
+            }
+
+            Boolean Ifupdate = true;
+
+            int min;
+
+            if(selectedPage.HasValue)
+            {
+                if(selectedPage >= 0 && selectedPage <= CountPage)
+                {
+                    CurrentPage = (int)selectedPage;
+                    min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                    for(int i = CurrentPage*10; i < min; i++)
+                    {
+                        CurrentPageList.Add(TableList[i]);
+                    }
+                }
+            }
+            else
+            {
+                switch (direction)
+                {
+                    case 1:
+                        if (CurrentPage > 0)
+                        {
+                            CurrentPage--;
+                            min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage *10+10:CountRecords;
+                            for (int i = CurrentPage * 10; i < min; i++)
+                            {
+                                CurrentPageList.Add(TableList[i]);
+                            }
+                        }
+                        else
+                        {
+                            Ifupdate = false;
+                        }
+                        break;
+                    case 2:
+                        if (CurrentPage < CountPage - 1)
+                        {
+                            CurrentPage++;
+                            min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                            for (int i = CurrentPage * 10; i < min; i++)
+                            {
+                                CurrentPageList.Add(TableList[i]);
+                            }
+                        }
+                        else
+                        {
+                            Ifupdate = false;
+                        }
+                        break;
+                }
+            }
+            if (Ifupdate)
+            {
+                PageListBox.Items.Clear();
+
+                for(int i = 1; i <= CountPage; i++)
+                {
+                    PageListBox.Items.Add(i);
+                }
+                PageListBox.SelectedIndex = CurrentPage;
+
+                min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                TBCount.Text = min.ToString();
+                TBAllRecords.Text = " из " + CountRecords.ToString();
+                AgentListView.ItemsSource = CurrentPageList;
+
+                AgentListView.Items.Refresh();
+            }
+        }
         private void UpdateAgents()
         {
             var currentAgents = SaidyakovEyesSaveEntities.GetContext().Agent.ToList();
 
-            currentAgents = currentAgents.Where(p=>p.Title.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
+            currentAgents = currentAgents.Where(p=>(p.Title.ToLower().Contains(TBoxSearch.Text.ToLower())
+            || p.Phone.Replace("(","").Replace(")", "").Replace("-", "").Replace(" ", "").Contains(TBoxSearch.Text)
+            || p.Email.ToLower().Contains(TBoxSearch.Text.ToLower()))).ToList();
 
-            AgentListView.ItemsSource = currentAgents.ToList();
 
-            switch(ComboTypeDiscnt.SelectedIndex)
+            switch(ComboTypeAgentType.SelectedIndex)
             {
                 case 1: currentAgents = currentAgents.Where(p => (p.AgentTypeID == 1)).ToList(); break;
                 case 2: currentAgents = currentAgents.Where(p => (p.AgentTypeID == 2)).ToList(); break;
@@ -54,12 +144,17 @@ namespace SaidyakovAgents
 
             switch(ComboTypeSort.SelectedIndex)
             {
-                case 0: AgentListView.ItemsSource = currentAgents.ToList(); break;
-                case 1: AgentListView.ItemsSource = currentAgents.OrderBy(p => p.Title).ToList(); break;
-                case 2: AgentListView.ItemsSource = currentAgents.OrderByDescending(p => p.Title).ToList(); break;
-                case 3: AgentListView.ItemsSource = currentAgents.OrderBy(p => p.Priority).ToList(); break;
-                case 4: AgentListView.ItemsSource = currentAgents.OrderByDescending(p => p.Priority).ToList(); break;
+                //case 0: currentAgents = currentAgents.ToList(); break;
+                case 1: currentAgents = currentAgents.OrderBy(p => p.Title).ToList(); break;
+                case 2: currentAgents = currentAgents.OrderByDescending(p => p.Title).ToList(); break;
+                case 5: currentAgents = currentAgents.OrderBy(p => p.Priority).ToList(); break;
+                case 6: currentAgents = currentAgents.OrderByDescending(p => p.Priority).ToList(); break;
             }
+
+            AgentListView.ItemsSource = currentAgents;
+
+            TableList = currentAgents;
+            ChangePage(0, 0);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -68,11 +163,6 @@ namespace SaidyakovAgents
         }
 
         private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateAgents();
-        }
-
-        private void ComboTypeDiscnt_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateAgents();
         }
@@ -111,5 +201,26 @@ namespace SaidyakovAgents
         {
             UpdateAgents();
         }
+
+        private void ComboTypeAgentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateAgents();
+        }
+
+        private void PageListBox_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangePage(0, Convert.ToInt32(PageListBox.SelectedItem.ToString()) - 1);
+        }
+
+        private void LeftDirBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(1, null);
+        }
+
+        private void RightDirBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(2, null);
+        }
+
     }
 }

@@ -13,16 +13,14 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left">
-            <StackPanel Margin="10" Orientation="Horizontal">
-                <TextBlock Text="Поиск " TextAlignment="Left" Width="300" FontSize="20"></TextBlock>
-                <TextBox Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged"
-                         TextAlignment="Left" Width="200" FontSize="15"></TextBox>
-            </StackPanel>
+        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBox Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged"
+         TextAlignment="Left" Width="200" FontSize="15" Margin="15"></TextBox>
 
             <StackPanel Orientation="Horizontal" Margin="10">
-                <ComboBox Name="ComboTypeDiscnt" SelectionChanged="ComboTypeDiscnt_SelectionChanged" FontSize="15" Width="80" Background="Transparent">
+                <ComboBox Name="ComboTypeAgentType" SelectionChanged="ComboTypeAgentType_SelectionChanged" FontSize="15" Width="80" Background="Transparent">
                     <TextBlock>Все типы</TextBlock>
                     <TextBlock>ЗАО</TextBlock>
                     <TextBlock>МКК</TextBlock>
@@ -75,12 +73,12 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         
-                        <Image Width="200" Grid.Column="0" HorizontalAlignment="Center">
+                        <Image Width="200" Grid.Column="0" Grid.RowSpan="4" HorizontalAlignment="Center">
                             <Image.Source>
-                                <Binding Path="MainImagePath">
+                                <Binding Path="Logo">
                                     <Binding.TargetNullValue>
                                         <ImageSource>
-                                            Resources/picture.png
+                                            /Resources/picture.png
                                         </ImageSource>
                                     </Binding.TargetNullValue>
                                 </Binding>
@@ -91,7 +89,7 @@
                             <TextBlock Text="{Binding AgentTypeTitle}" FontSize="20" Margin="5"></TextBlock>
                             <TextBlock Text="{Binding Title}" FontSize="20" Margin="5"></TextBlock>
                         </StackPanel>
-                        <TextBlock Text="{Binding AgentTypeTitle, StringFormat=продаж за год}" FontSize="16" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"></TextBlock>
+                        <!--<TextBlock Text="{Binding AgentTypeTitle, StringFormat=продаж за год}" FontSize="16" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"></TextBlock>-->
                         <TextBlock Text="{Binding Phone}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="16"></TextBlock>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
                             <TextBlock Text="Приоритетность: " FontSize="16"/>
@@ -102,5 +100,20 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock Name="TBCount" FontSize="20" Height="20"/>
+            <TextBlock Name="TBAllRecords" FontSize="20" Height="20"/>
+            <Button Name="LeftDirBtn" Content="&lt;" Width="20" Height="20"
+                    Click="LeftDirBtn_Click"></Button>
+            <ListBox FontSize="20" Name="PageListBox" MouseUp="PageListBox_MouseUp">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <Button Name="RightDirBtn" Content="&gt;" Width="20" Height="20"
+                    Click="RightDirBtn_Click"></Button>
+        </StackPanel>
     </Grid>
 </Page>
