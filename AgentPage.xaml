@@ -56,6 +56,9 @@
                              Width="300" FontSize="20" Checked="RBtnPrioryDown_Checked"></RadioButton>-->
                 </ComboBox>
             </StackPanel>
+            <Button Content="Добавить" Name="AddButton" Click="AddButton_Click" Margin="10"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
+
         </WrapPanel>
         <ListView Name="AgentListView" Grid.Row="2" Margin="10">
             <ListView.ItemTemplate>
@@ -68,6 +71,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
@@ -95,7 +99,9 @@
                             <TextBlock Text="Приоритетность: " FontSize="16"/>
                             <TextBlock Text="{Binding Priority}" FontSize="16"/>
                         </StackPanel>
-                        
+                        <Button Name="ChangeBtn" Content="Изменить" Margin="5"
+                            Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left"
+                            Click="ChangeBtn_Click"></Button>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

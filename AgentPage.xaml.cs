@@ -157,11 +157,6 @@ namespace SaidyakovAgents
             ChangePage(0, 0);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Manager.MainFrame.Navigate(new AddEditPage());
-        }
-
         private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateAgents();
@@ -222,5 +217,14 @@ namespace SaidyakovAgents
             ChangePage(2, null);
         }
 
+        private void ChangeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Agent));
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage(null));
+        }
     }
 }
