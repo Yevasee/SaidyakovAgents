@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:SaidyakovAgents"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AgentPage" FontFamily="Tw Cen MT">
+      Title="AgentPage" FontFamily="Tw Cen MT" IsVisibleChanged="Page_IsVisibleChanged">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -60,9 +60,9 @@
                     HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
 
         </WrapPanel>
-        <ListView Name="AgentListView" Grid.Row="2" Margin="10">
+        <ListView Name="AgentListView" Grid.Row="2" Margin="10" >
             <ListView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>

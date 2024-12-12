@@ -23,7 +23,10 @@ namespace SaidyakovAgents
         }
     
         public int ID { get; set; }
-        public int AgentTypeID { get; set; }
+        public int AgentTypeID {
+            get;
+            set;
+        }
         public string AgentTypeTitle {
             get
             {

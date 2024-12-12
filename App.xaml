@@ -12,7 +12,6 @@
             <Setter Property="FontSize" Value="20"></Setter>
         </Style>
         <Style TargetType="{x:Type ListViewItem}">
-            <!-- get rid of the highlighting -->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListViewItem}">

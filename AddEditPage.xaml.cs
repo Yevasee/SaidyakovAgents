@@ -31,7 +31,7 @@ namespace SaidyakovAgents
                 _currentAgent = SelectedAgent;
             }
 
-            CmbTypeAgentType.SelectedIndex = _currentAgent.AgentTypeID-1;
+            CmbTypeAgentType.SelectedIndex = _currentAgent.AgentTypeID;
             DataContext = _currentAgent;
         }
 
@@ -64,6 +64,11 @@ namespace SaidyakovAgents
             if(CmbTypeAgentType.SelectedItem == null)
             {
                 errors.AppendLine("Укажите тип агента");
+            }
+            else
+            {
+                _currentAgent.AgentTypeID = CmbTypeAgentType.SelectedIndex+1;
+                _currentAgent.AgentTypeTitle = CmbTypeAgentType.SelectedItem.ToString();
             }
             if (string.IsNullOrWhiteSpace(_currentAgent.Priority.ToString()))
             {
@@ -123,7 +128,56 @@ namespace SaidyakovAgents
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
+            var _currentAgent = (sender as Button).DataContext as Agent;
 
+            var currentProductSale = SaidyakovEyesSaveEntities.GetContext().ProductSale.ToList();
+            currentProductSale = currentProductSale.Where(p => p.AgentID == _currentAgent.ID).ToList();
+
+            if (currentProductSale.Count != 0)
+                MessageBox.Show("Невозможно выполнить удаление, так как существует история реализации продуктов");
+            else
+            {
+                var currentAgentPriorityHistory = SaidyakovEyesSaveEntities.
+                    GetContext().AgentPriorityHistory.ToList();
+                var currentShop = SaidyakovEyesSaveEntities.GetContext().Shop.ToList();
+                currentAgentPriorityHistory = currentAgentPriorityHistory.
+                    Where(p => p.AgentID == _currentAgent.ID).ToList();
+                currentShop = currentShop.Where(p => p.AgentID == _currentAgent.ID).ToList();
+
+
+                if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        SaidyakovEyesSaveEntities.GetContext().Agent.Remove(_currentAgent);
+
+                        if (currentAgentPriorityHistory.Count != 0)
+                        {
+                            for (int i = 0; currentAgentPriorityHistory.Count == i; i++)
+                            { 
+                                SaidyakovEyesSaveEntities.GetContext().AgentPriorityHistory.
+                                    Remove(currentAgentPriorityHistory[i]); 
+                            }
+                        }
+                        if (currentShop.Count != 0)
+                        {
+                            for (int i = 0; currentShop.Count == i; i++)
+                            {
+                                SaidyakovEyesSaveEntities.GetContext().Shop.Remove(currentShop[i]);
+                            }
+                        }
+                        SaidyakovEyesSaveEntities.GetContext().SaveChanges();
+
+                        MessageBox.Show("Информация удалена!");
+                        Manager.MainFrame.GoBack();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                }
+            }
         }
     }
 }

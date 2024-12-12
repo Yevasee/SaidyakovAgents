@@ -226,5 +226,15 @@ namespace SaidyakovAgents
         {
             Manager.MainFrame.Navigate(new AddEditPage(null));
         }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                SaidyakovEyesSaveEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                AgentListView.ItemsSource = SaidyakovEyesSaveEntities.GetContext().Agent.ToList();
+                UpdateAgents();
+            }
+        }
     }
 }
