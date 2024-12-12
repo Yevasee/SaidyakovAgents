@@ -23,18 +23,7 @@ namespace SaidyakovAgents
         }
     
         public int ID { get; set; }
-        public int AgentTypeID {
-            get;
-            set;
-        }
-        public string AgentTypeTitle {
-            get
-            {
-                if (AgentTypeID != 0) return AgentType.Title;
-                return null;
-            }
-            set { }
-        }
+        public int AgentTypeID { get; set; }
         public string Title { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }

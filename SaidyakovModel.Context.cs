@@ -15,15 +15,6 @@ namespace SaidyakovAgents
     
     public partial class SaidyakovEyesSaveEntities : DbContext
     {
-        private static SaidyakovEyesSaveEntities _context;
-
-        public static SaidyakovEyesSaveEntities GetContext()
-        {
-            if(_context == null)
-                _context = new SaidyakovEyesSaveEntities();
-
-            return _context;
-        }
         public SaidyakovEyesSaveEntities()
             : base("name=SaidyakovEyesSaveEntities")
         {
