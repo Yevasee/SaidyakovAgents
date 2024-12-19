@@ -27,10 +27,10 @@
            Margin="10,10,10,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                   Width="350" Height="40" IsEditable="True"
                   IsTextSearchEnabled="True" TextSearch.TextPath="Title"
-                  IsReadOnly="False" StaysOpenOnEdit="True" SelectionChanged="cmbProducts_SelectionChanged"/>
-        <TextBox Name="TextBoxSearch" FontSize="16" Grid.Column="0" Grid.Row="1"
+                  IsReadOnly="False" StaysOpenOnEdit="True"/> <!--SelectionChanged="cmbProducts_SelectionChanged"-->
+        <!--<TextBox Name="TextBoxSearch" FontSize="16" Grid.Column="0" Grid.Row="1"
            Margin="10,10,10,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                  Width="333" Height="40" TextChanged="TextBoxSearch_TextChanged"/>
+                  Width="333" Height="40" TextChanged="TextBoxSearch_TextChanged"/>-->
 
         <TextBlock Text="Количество: " FontSize="16" Grid.Column="1" Grid.Row="0"
            Margin="10,0,10,0" HorizontalAlignment="Left"></TextBlock>

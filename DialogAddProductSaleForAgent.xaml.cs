@@ -82,31 +82,31 @@ namespace SaidyakovAgents
             }
         }
 
-        private void TextBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var items = SaidyakovEyesSaveEntities.GetContext().Product.ToList();
-            if (/*cmbProducts.SelectedIndex == -1 ||*/ TextBoxSearch.Text != cmbProducts.Text)
-            {
-                items = items.Where(p => (p.Title.ToLower().Contains(TextBoxSearch.Text.ToLower()))).ToList();
-                //cmbProducts.DisplayMemberPath = "Title";
-                //cmbProducts.SelectedValuePath = "ID";
-                cmbProducts.IsDropDownOpen = true;
-                cmbProducts.ItemsSource = items;
-            }
-        }
+        //private void TextBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    var items = SaidyakovEyesSaveEntities.GetContext().Product.ToList();
+        //    if (/*cmbProducts.SelectedIndex == -1 ||*/ TextBoxSearch.Text != cmbProducts.Text)
+        //    {
+        //        items = items.Where(p => (p.Title.ToLower().Contains(TextBoxSearch.Text.ToLower()))).ToList();
+        //        //cmbProducts.DisplayMemberPath = "Title";
+        //        //cmbProducts.SelectedValuePath = "ID";
+        //        cmbProducts.IsDropDownOpen = true;
+        //        cmbProducts.ItemsSource = items;
+        //    }
+        //}
 
-        private void cmbProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //TextBoxSearch.Text = cmbProducts.Text;
-            var items = SaidyakovEyesSaveEntities.GetContext().Product.ToList();
-            cmbProducts.IsDropDownOpen = true;
-            cmbProducts.ItemsSource = items;
+        //private void cmbProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    //TextBoxSearch.Text = cmbProducts.Text;
+        //    var items = SaidyakovEyesSaveEntities.GetContext().Product.ToList();
+        //    cmbProducts.IsDropDownOpen = true;
+        //    cmbProducts.ItemsSource = items;
 
-            if (!string.IsNullOrEmpty(cmbProducts.Text))
-            {
-                TextBoxSearch.Text = cmbProducts.Text;
-            }
-        }
+        //    if (!string.IsNullOrEmpty(cmbProducts.Text))
+        //    {
+        //        TextBoxSearch.Text = cmbProducts.Text;
+        //    }
+        //}
         //private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         //{
         //    var items = SaidyakovEyesSaveEntities.GetContext().Product.ToList();
