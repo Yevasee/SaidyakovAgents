@@ -1,0 +1,21 @@
+﻿<Window x:Class="SaidyakovAgents.PrioryChanger"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SaidyakovAgents"
+        mc:Ignorable="d"
+        Title="PrioryChanger" Width="250" Height="150">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0" Margin="5">
+            <TextBlock Name="TextBlockPriority" Text="Приоритет:" FontSize="20" Height="30" Margin="2"/>
+            <TextBox Name="TextBoxPriority" Grid.Row="0" FontSize="20" Height="30" Margin="2"/>
+        </StackPanel>
+        
+        <Button Name="BtnConfirm" Content="Подтвердить" Margin="5" Grid.Row="1" Click="BtnConfirm_Click"/>
+    </Grid>
+</Window>

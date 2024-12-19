@@ -147,6 +147,8 @@ namespace SaidyakovAgents
                 //case 0: currentAgents = currentAgents.ToList(); break;
                 case 1: currentAgents = currentAgents.OrderBy(p => p.Title).ToList(); break;
                 case 2: currentAgents = currentAgents.OrderByDescending(p => p.Title).ToList(); break;
+                case 3: currentAgents = currentAgents.OrderBy(p => p.Discount).ToList(); break;
+                case 4: currentAgents = currentAgents.OrderByDescending(p => p.Discount).ToList(); break;
                 case 5: currentAgents = currentAgents.OrderBy(p => p.Priority).ToList(); break;
                 case 6: currentAgents = currentAgents.OrderByDescending(p => p.Priority).ToList(); break;
             }
@@ -234,6 +236,31 @@ namespace SaidyakovAgents
                 SaidyakovEyesSaveEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
                 AgentListView.ItemsSource = SaidyakovEyesSaveEntities.GetContext().Agent.ToList();
                 UpdateAgents();
+            }
+        }
+
+        private void ChangePrioryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (AgentListView.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Выберите хотя бы одного агента", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            var dialog = new PrioryChanger(AgentListView.SelectedItems);
+            dialog.ShowDialog();
+            UpdateAgents();
+        }
+
+        private void AgentListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(AgentListView.SelectedItems.Count > 1)
+            {
+                ChangePrioryBtn.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ChangePrioryBtn.Visibility = Visibility.Hidden;
             }
         }
     }

@@ -12,6 +12,9 @@
             <Setter Property="FontSize" Value="20"></Setter>
         </Style>
         <Style TargetType="{x:Type ListViewItem}">
+            <!--<Setter Property="Margin" Value="5"></Setter>
+            <Setter Property="Width" Value="auto"></Setter>-->
+            <Setter Property="Height" Value="auto"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListViewItem}">

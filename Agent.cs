@@ -11,7 +11,8 @@ namespace SaidyakovAgents
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Windows.Media;
+
     public partial class Agent
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,18 +24,7 @@ namespace SaidyakovAgents
         }
     
         public int ID { get; set; }
-        public int AgentTypeID {
-            get;
-            set;
-        }
-        public string AgentTypeTitle {
-            get
-            {
-                if (AgentTypeID != 0) return AgentType.Title;
-                return null;
-            }
-            set { }
-        }
+        public int AgentTypeID { get; set; }
         public string Title { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
@@ -44,7 +34,67 @@ namespace SaidyakovAgents
         public string DirectorName { get; set; }
         public string INN { get; set; }
         public string KPP { get; set; }
-    
+
+        public string AgentTypeTitle
+        {
+            get
+            {
+                return AgentType.Title;
+            }
+            set { }
+        }
+
+        public decimal Prod
+        {
+            get
+            {
+                decimal p = 0;
+                foreach (ProductSale sales in ProductSale)
+                {
+                    p = p + sales.Stoimost;
+                }
+                return p;
+            }
+        }
+        public decimal Discount
+        {
+            get
+            {
+                decimal d = 0;
+                if (Prod >= 0 && Prod < 10000)
+                {
+                    d = 0;
+                }
+                else if (Prod >= 10000 && Prod < 50000)
+                {
+                    d = 5;
+                }
+                else if (Prod >= 50000 && Prod < 150000)
+                {
+                    d = 10;
+                }
+                else if (Prod >= 150000 && Prod < 500000)
+                {
+                    d = 20;
+                }
+                else
+                {
+                    d = 25;
+                }
+                return d;
+            }
+        }
+        public SolidColorBrush BackgroundStyle
+        {
+            get
+            {
+                if (Discount >= 25)
+                {
+                    return (SolidColorBrush)new BrushConverter().ConvertFromString("LightGreen");
+                }
+                return null;
+            }
+        }
         public virtual AgentType AgentType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AgentPriorityHistory> AgentPriorityHistory { get; set; }

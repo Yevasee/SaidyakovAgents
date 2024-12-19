@@ -16,24 +16,22 @@ namespace SaidyakovAgents
     public partial class SaidyakovEyesSaveEntities : DbContext
     {
         private static SaidyakovEyesSaveEntities _context;
-
         public static SaidyakovEyesSaveEntities GetContext()
         {
-            if(_context == null)
+            if (_context == null)
                 _context = new SaidyakovEyesSaveEntities();
-
             return _context;
         }
         public SaidyakovEyesSaveEntities()
             : base("name=SaidyakovEyesSaveEntities")
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Agent> Agent { get; set; }
         public virtual DbSet<AgentPriorityHistory> AgentPriorityHistory { get; set; }
         public virtual DbSet<AgentType> AgentType { get; set; }

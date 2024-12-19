@@ -24,7 +24,7 @@ namespace SaidyakovAgents
         {
             InitializeComponent();
             MainFrame.Navigate(new AgentPage());
-            Manager.MainFrame =MainFrame;
+            Manager.MainFrame = MainFrame;
         }
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)

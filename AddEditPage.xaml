@@ -37,22 +37,23 @@
             <TextBlock Text="Директор" FontSize="15" Height="20" MinWidth="120" Width="auto" Margin="5"/>
             <TextBox Text="{Binding DirectorName}" FontSize="15" Height="20" Width="400"/>
         </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Vertical" Grid.RowSpan="4">
+        <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal" Grid.RowSpan="2">
             <TextBlock Text="Логотип" FontSize="15" Height="20" MinWidth="120" Width="auto" Margin="5"/>
-            <Image Name="LogoImage" MinHeight="50" Height="100" Width="100"
-                   HorizontalAlignment="Center" Margin="5">
+            <Image Name="LogoImage" MinHeight="50" Height="100" Width="100" Margin="5">
                 <Image.Source>
                     <Binding Path="Logo" TargetNullValue="/Resources/picture.png"/>
                 </Image.Source>
             </Image>
-            <Button Content="Изменить" Name="ChangePicBtn" Click="ChangePicBtn_Click"/>
         </StackPanel>
-        
-        
+        <StackPanel Grid.Column="0" Grid.Row="5" Orientation="Horizontal" Grid.RowSpan="2">
+            <Button Name="ChangePicBtn" Content="Изменить" HorizontalAlignment="Left" Click="ChangePicBtn_Click"/>
+            <Button Name="BtnHistorySaleForAgent" Content="История реализации продукции" HorizontalAlignment="Left"
+                    Click="BtnHistorySaleForAgent_Click"/>
+        </StackPanel>
+
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
             <TextBlock Text="Тип агента" FontSize="15" Height="20" Width="100" Margin="5"/>
-            <ComboBox FontSize="15" Height="25" Width="100" Name="CmbTypeAgentType"
-                      >
+            <ComboBox FontSize="15" Height="25" Width="100" Name="CmbTypeAgentType">
                 <TextBlock>ЗАО</TextBlock>
                 <TextBlock>МКК</TextBlock>
                 <TextBlock>МФО</TextBlock>

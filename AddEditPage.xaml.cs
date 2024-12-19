@@ -31,7 +31,7 @@ namespace SaidyakovAgents
                 _currentAgent = SelectedAgent;
             }
 
-            CmbTypeAgentType.SelectedIndex = _currentAgent.AgentTypeID;
+            CmbTypeAgentType.SelectedIndex = _currentAgent.AgentTypeID-1;
             DataContext = _currentAgent;
         }
 
@@ -178,6 +178,11 @@ namespace SaidyakovAgents
                     }
                 }
             }
+        }
+
+        private void BtnHistorySaleForAgent_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new ProductSaleForAgent((sender as Button).DataContext as Agent));
         }
     }
 }
